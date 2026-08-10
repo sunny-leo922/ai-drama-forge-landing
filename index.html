@@ -99,6 +99,21 @@ section h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:16px
 .feature-card h3{font-size:1.15rem;margin-bottom:8px}
 .feature-card p{color:var(--foreground-muted);font-size:.9rem;line-height:1.6}
 
+/* Beta CTA Banner */
+.beta-cta-banner{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(124,58,237,0.12) 0%,rgba(236,72,153,0.08) 100%);border:1px solid rgba(124,58,237,0.2);border-radius:var(--radius);padding:48px 40px;text-align:center;max-width:800px;margin:0 auto}
+.beta-cta-banner::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 50%,rgba(124,58,237,0.06) 0%,transparent 50%),radial-gradient(circle at 70% 50%,rgba(236,72,153,0.04) 0%,transparent 50%);animation:banner-shift 12s ease-in-out infinite}
+@keyframes banner-shift{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-10px)}}
+.beta-cta-banner .banner-content{position:relative;z-index:1}
+.beta-cta-banner .banner-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;background:rgba(236,72,153,0.15);border:1px solid rgba(236,72,153,0.25);border-radius:999px;font-size:.75rem;color:var(--cta);margin-bottom:20px;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600}
+.beta-cta-banner .banner-badge .dot{width:6px;height:6px;background:var(--cta);border-radius:50%;animation:pulse 2s ease-in-out infinite}
+.beta-cta-banner h3{font-family:'Space Grotesk',system-ui,sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:12px;color:var(--foreground)}
+.beta-cta-banner h3 .gradient{background:linear-gradient(135deg,var(--accent),var(--cta));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.beta-cta-banner p{color:var(--foreground-muted);font-size:.95rem;line-height:1.7;max-width:560px;margin:0 auto 24px}
+.beta-cta-banner .banner-highlights{display:flex;flex-wrap:wrap;justify-content:center;gap:32px;margin-bottom:28px}
+.beta-cta-banner .banner-highlights .hl{text-align:center}
+.beta-cta-banner .banner-highlights .hl-icon{font-family:'Space Grotesk',system-ui,sans-serif;font-size:1.25rem;font-weight:700;color:var(--accent);margin-bottom:2px}
+.beta-cta-banner .banner-highlights .hl-label{font-size:.78rem;color:var(--foreground-muted)}
+
 /* Pricing */
 .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:900px;margin:0 auto}
 .pricing-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:36px;text-align:center;transition:border-color .3s var(--easing),transform .2s var(--easing);position:relative}
@@ -267,6 +282,26 @@ footer p{color:var(--foreground-muted);font-size:.85rem}
         <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <h3>失败不扣分</h3>
         <p>AI 生成失败？积分自动退还。按实际产出计费，不玩套路。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BETA CTA -->
+<section style="padding:80px 0 0">
+  <div class="container">
+    <div class="beta-cta-banner reveal">
+      <div class="banner-content">
+        <div class="banner-badge"><span class="dot"></span> 首批内测用户招募中</div>
+        <h3>你不需要懂技术，<br>只需要一个<span class="gradient">好故事</span></h3>
+        <p>AI Drama Forge 正在寻找第一批内测创作者。如果你是短剧编剧、自媒体达人、或者只是有好故事想说的人——我们帮你把文字变成视频，从剧本到成片，全自动。</p>
+        <div class="banner-highlights">
+          <div class="hl"><div class="hl-icon">全免费</div><div class="hl-label">内测期间零费用</div></div>
+          <div class="hl"><div class="hl-icon">7×24h</div><div class="hl-label">优先技术支持</div></div>
+          <div class="hl"><div class="hl-icon">限名额</div><div class="hl-label">首批仅开放 50 人</div></div>
+          <div class="hl"><div class="hl-icon">零门槛</div><div class="hl-label">有故事就能创作</div></div>
+        </div>
+        <a href="#contact" class="btn-primary" style="font-size:1rem;padding:14px 40px">加入内测 · 限时免费</a>
       </div>
     </div>
   </div>
