@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Drama Forge — AI 短剧智能工厂</title>
+<meta name="description" content="从剧本到成片，全链路 AI 自动化。一键生成 60 集竖屏短剧，零门槛短剧创作平台。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #020203;
+  --bg-base: #050506;
+  --bg-elevated: #0a0a0c;
+  --surface: rgba(255,255,255,0.05);
+  --foreground: #EDEDEF;
+  --foreground-muted: #8A8F98;
+  --accent: #7C3AED;
+  --accent-glow: rgba(124,58,237,0.25);
+  --cta: #EC4899;
+  --cta-glow: rgba(236,72,153,0.3);
+  --border: rgba(255,255,255,0.08);
+  --radius: 16px;
+  --easing: cubic-bezier(0.16,1,0.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg-deep);color:var(--foreground);line-height:1.6;overflow-x:hidden}
+h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif;letter-spacing:-0.02em}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* Ambient */
+.ambient-blob{position:fixed;border-radius:50%;filter:blur(120px);opacity:0.12;pointer-events:none;z-index:0}
+.ambient-blob-1{width:600px;height:600px;background:var(--accent);top:-200px;right:-100px;animation:float 20s ease-in-out infinite}
+.ambient-blob-2{width:500px;height:500px;background:var(--cta);bottom:-150px;left:-150px;animation:float 25s ease-in-out infinite reverse}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-30px)}}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:16px 0;transition:background .3s var(--easing)}
+nav.scrolled{background:rgba(2,2,3,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+nav .container{display:flex;align-items:center;justify-content:space-between}
+nav .logo{font-family:'Space Grotesk',system-ui,sans-serif;font-weight:700;font-size:1.25rem;color:var(--foreground);text-decoration:none;display:flex;align-items:center;gap:8px}
+nav .logo span{background:linear-gradient(135deg,var(--accent),var(--cta));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+nav .logo svg{width:24px;height:24px}
+nav .nav-links{display:flex;gap:32px;list-style:none}
+nav .nav-links a{color:var(--foreground-muted);text-decoration:none;font-size:.9rem;transition:color .2s}
+nav .nav-links a:hover{color:var(--foreground)}
+nav .cta-btn{padding:10px 24px;background:linear-gradient(135deg,var(--accent),var(--cta));color:#fff;border:none;border-radius:999px;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;transition:transform .2s var(--easing),box-shadow .2s var(--easing);text-decoration:none;display:inline-block}
+nav .cta-btn:hover{transform:scale(1.05);box-shadow:0 0 30px var(--cta-glow)}
+@media(max-width:768px){nav .nav-links{display:none}}
+
+/* Hero */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:80px}
+.hero .container{position:relative;z-index:1;text-align:center}
+.hero .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;background:var(--surface);border:1px solid var(--border);border-radius:999px;font-size:.8rem;color:var(--foreground-muted);margin-bottom:24px}
+.hero .badge .dot{width:6px;height:6px;background:#22C55E;border-radius:50%;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.hero h1{font-size:clamp(2.5rem,6vw,4.5rem);font-weight:700;line-height:1.1;margin-bottom:24px}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--accent) 0%,var(--cta) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:1.2rem;color:var(--foreground-muted);max-width:600px;margin:0 auto 40px}
+.hero .hero-cta-group{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{padding:14px 36px;background:linear-gradient(135deg,var(--accent),var(--cta));color:#fff;border:none;border-radius:999px;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:1rem;cursor:pointer;transition:transform .2s var(--easing),box-shadow .2s var(--easing);text-decoration:none;display:inline-block}
+.btn-primary:hover{transform:scale(1.05);box-shadow:0 0 40px var(--accent-glow)}
+.btn-secondary{padding:14px 36px;background:transparent;color:var(--foreground);border:1px solid var(--border);border-radius:999px;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:500;font-size:1rem;cursor:pointer;transition:all .2s var(--easing);text-decoration:none}
+.btn-secondary:hover{background:var(--surface);border-color:rgba(255,255,255,0.15)}
+
+/* Stats */
+.hero-stats{display:flex;gap:48px;justify-content:center;margin-top:64px;flex-wrap:wrap}
+.hero-stats .stat{text-align:center}
+.hero-stats .stat-value{font-family:'Space Grotesk',system-ui,sans-serif;font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--cta));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-stats .stat-label{font-size:.85rem;color:var(--foreground-muted);margin-top:4px}
+
+/* Sections */
+section{padding:100px 0;position:relative}
+section .container{position:relative;z-index:1}
+.section-label{display:inline-flex;align-items:center;gap:6px;padding:4px 14px;background:var(--surface);border:1px solid var(--border);border-radius:999px;font-size:.8rem;color:var(--accent);margin-bottom:16px;font-family:'Space Grotesk',system-ui,sans-serif}
+section h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:16px;line-height:1.2}
+.section-desc{color:var(--foreground-muted);font-size:1.1rem;max-width:560px;margin-bottom:48px}
+
+/* Pipeline */
+.pipeline-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.pipeline-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:border-color .3s var(--easing),transform .2s var(--easing)}
+.pipeline-card:first-child{border-left:2px solid var(--accent)}
+.pipeline-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.pipeline-card .step-num{font-family:'Space Grotesk',system-ui,sans-serif;font-size:.75rem;color:var(--accent);margin-bottom:8px}
+.pipeline-card h3{font-size:1.1rem;margin-bottom:8px}
+.pipeline-card p{color:var(--foreground-muted);font-size:.9rem;line-height:1.5}
+
+/* Section Divider */
+.section-divider{width:100%;max-width:200px;height:1px;margin:0 auto;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0.3}
+
+/* Features */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.feature-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:32px;transition:border-color .3s var(--easing)}
+.feature-card:hover{border-color:var(--cta)}
+.feature-card .icon-wrap{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),var(--cta));border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.feature-card .icon-wrap svg{width:22px;height:22px;color:#fff}
+.feature-card h3{font-size:1.15rem;margin-bottom:8px}
+.feature-card p{color:var(--foreground-muted);font-size:.9rem;line-height:1.6}
+
+/* Pricing */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:900px;margin:0 auto}
+.pricing-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:36px;text-align:center;transition:border-color .3s var(--easing),transform .2s var(--easing);position:relative}
+.pricing-card:hover{transform:translateY(-4px)}
+.pricing-card.featured{border-color:var(--accent);background:linear-gradient(180deg,var(--bg-elevated) 0%,rgba(124,58,237,0.08) 100%)}
+.pricing-card.featured::before{content:'推荐';position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:4px 16px;background:linear-gradient(135deg,var(--accent),var(--cta));border-radius:999px;font-size:.75rem;font-weight:600;color:#fff}
+.pricing-card .plan-name{font-family:'Space Grotesk',system-ui,sans-serif;font-size:1.1rem;color:var(--foreground-muted);margin-bottom:8px}
+.pricing-card .plan-price{font-family:'Space Grotesk',system-ui,sans-serif;font-size:2.5rem;font-weight:700;margin-bottom:4px}
+.pricing-card .plan-price span{font-size:1rem;color:var(--foreground-muted);font-weight:400}
+.pricing-card .plan-desc{color:var(--foreground-muted);font-size:.85rem;margin-bottom:24px}
+.pricing-card .plan-features{list-style:none;text-align:left;margin-bottom:28px}
+.pricing-card .plan-features li{padding:8px 0;font-size:.9rem;color:var(--foreground-muted);border-bottom:1px solid var(--border)}
+.pricing-card .plan-features li:last-child{border-bottom:none}
+.plan-btn{display:block;padding:12px;background:transparent;color:var(--foreground);border:1px solid rgba(255,255,255,0.15);border-radius:999px;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;text-decoration:none;transition:all .2s var(--easing)}
+.plan-btn:hover{background:rgba(255,255,255,0.08)}
+.pricing-card.featured .plan-btn{background:linear-gradient(135deg,var(--accent),var(--cta));border:none;color:#fff}
+.pricing-card.featured .plan-btn:hover{box-shadow:0 0 30px var(--accent-glow)}
+
+/* Contact */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;max-width:900px;margin:32px auto 0}
+.contact-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:28px;text-align:center;transition:border-color .3s var(--easing)}
+.contact-card:hover{border-color:var(--accent)}
+.contact-card .contact-icon{width:48px;height:48px;margin:0 auto 16px;background:linear-gradient(135deg,var(--accent),var(--cta));border-radius:12px;display:flex;align-items:center;justify-content:center}
+.contact-card .contact-icon svg{width:22px;height:22px;color:#fff}
+.contact-card .contact-label{font-size:.8rem;color:var(--foreground-muted);margin-bottom:4px}
+.contact-card .contact-value{font-weight:600;font-size:1rem;color:var(--foreground)}
+.contact-card .contact-value a{color:var(--accent);text-decoration:none}
+.contact-card .contact-value a:hover{text-decoration:underline}
+
+/* QR Inline (WeChat/QQ/TG) */
+.contact-card .qr-inline{margin-top:16px}
+.contact-card .qr-img{display:block;width:100%;max-width:160px;height:auto;aspect-ratio:1/1;border-radius:8px;margin:0 auto;image-rendering:pixelated;image-rendering:crisp-edges}
+.contact-card .qr-tip{margin-top:8px;text-align:center;font-size:.75rem;color:var(--foreground-muted)}
+
+/* CTA */
+.cta-section{text-align:center}
+.cta-section h2{margin-bottom:24px}
+.cta-section p{color:var(--foreground-muted);max-width:500px;margin:0 auto 32px}
+
+/* Footer */
+footer{padding:40px 0;border-top:1px solid var(--border);text-align:center}
+footer p{color:var(--foreground-muted);font-size:.85rem}
+
+/* Scroll Reveal */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s var(--easing),transform .6s var(--easing)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Price Table */
+.price-table-wrap{overflow-x:auto;margin-top:40px}
+.price-table{width:100%;max-width:800px;margin:0 auto;border-collapse:collapse;font-size:.85rem}
+.price-table th{padding:12px;text-align:left;color:var(--foreground-muted)}
+.price-table th:last-child,.price-table td:last-child{text-align:right}
+.price-table td{padding:10px 12px;border-bottom:1px solid var(--border)}
+.price-table tr:last-child td{border-bottom:none}
+.price-table .highlight{background:rgba(124,58,237,0.12)}
+.price-table .tag{font-size:.75rem;color:var(--accent)}
+
+@media(max-width:768px){
+  section{padding:64px 0}
+  .hero-stats{gap:24px}
+  .hero-stats .stat-value{font-size:1.5rem}
+  .pricing-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+</style>
+</head>
+<body>
+
+<div class="ambient-blob ambient-blob-1"></div>
+<div class="ambient-blob ambient-blob-2"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="container">
+    <a href="#" class="logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <span>Drama Forge</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#pipeline">工作流</a></li>
+      <li><a href="#features">功能</a></li>
+      <li><a href="#pricing">定价</a></li>
+      <li><a href="#contact">联系</a></li>
+    </ul>
+    <a href="#contact" class="cta-btn">申请试用</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container reveal">
+    <div class="badge"><span class="dot"></span> AI 短剧智能工厂 · 内测中</div>
+    <h1>从剧本到成片<br><span class="gradient">全链路 AI 自动化</span></h1>
+    <p>不需要拍摄团队，不需要剪辑软件。输入想法，得到成片。</p>
+    <div class="hero-cta-group">
+      <a href="#contact" class="btn-primary">申请试用</a>
+      <a href="#pipeline" class="btn-secondary">查看工作流 →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-value">7 步</div><div class="stat-label">全自动流水线</div></div>
+      <div class="stat"><div class="stat-value">60 集</div><div class="stat-label">单次批量产出</div></div>
+      <div class="stat"><div class="stat-value">9:16</div><div class="stat-label">原生竖屏比例</div></div>
+      <div class="stat"><div class="stat-value">1080P</div><div class="stat-label">竖屏直出</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section id="pipeline">
+  <div class="container">
+    <div class="section-label reveal">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+      制作流程
+    </div>
+    <h2 class="reveal">7 步智能流水线</h2>
+    <p class="section-desc reveal">不需要拍摄团队，不需要剪辑软件。输入想法，得到成片。</p>
+    <div class="pipeline-grid">
+      <div class="pipeline-card reveal"><div class="step-num">STEP 01</div><h3>剧本生成</h3><p>输入故事梗概，AI 自动扩写为完整的分集剧本，含人物对白与场景描述</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 02</div><h3>角色设计</h3><p>AI 根据剧本自动设计角色形象，锁定外貌特征，全剧保持统一</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 03</div><h3>场景构图</h3><p>AI 为每集剧情自动生成场景画面，适配现代、古装、奇幻等任意风格</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 04</div><h3>分镜绘制</h3><p>AI 智能拆解每集为 10-15 个镜头，确定画面构图与运镜方式</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 05</div><h3>视频生成</h3><p>每个镜头生成 1080×1920 竖屏视频片段，画面流畅自然</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 06</div><h3>配音合成</h3><p>AI 为每个角色匹配专属声音，自动加入背景音乐与环境音效</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 07</div><h3>剪辑合片</h3><p>自动拼接所有镜头，添加转场特效、字幕与电影级调色，输出完整 MP4</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container">
+    <div class="section-label reveal">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      核心优势
+    </div>
+    <h2 class="reveal">为什么创作者选择我们</h2>
+    <p class="section-desc reveal">不用学任何新技术，像发朋友圈一样简单。</p>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3>零门槛上手</h3>
+        <p>不需要拍摄设备、演员、剪辑软件。写好故事梗概，AI 自动完成从剧本到成片的全过程。</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
+        <h3>竖屏直出，发即用</h3>
+        <p>1080×1920 原生竖屏 MP4，专为抖音、快手、TikTok 优化，下载即可发布，无需任何后期。</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>角色不崩脸</h3>
+        <p>全剧角色形象统一，60 集不换脸。专业级角色一致性技术，告别 AI 常见的"每集变个人"。</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>批量出片，坐着收钱</h3>
+        <p>一次提交，后台自动渲染 60 集。完成后通知你下载，你只需要想故事和数钱。</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10M12 2a15.3 15.3 0 0 0-4 10 15.3 15.3 0 0 0 4 10"/></svg></div>
+        <h3>中文 + 英语双市场</h3>
+        <p>同一套流程，同时产出国内版和海外版。覆盖抖音 6 亿用户 + TikTok 15 亿用户。</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>失败不扣分</h3>
+        <p>AI 生成失败？积分自动退还。按实际产出计费，不玩套路。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" style="margin-top:-32px"></div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-label reveal">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      定价方案
+    </div>
+    <h2 class="reveal">简洁积分制，按需选择</h2>
+    <p class="section-desc reveal">订阅解锁高级功能，积分用于生成消耗。生成失败自动退还。</p>
+    <div class="pricing-grid">
+      <div class="pricing-card reveal">
+        <div class="plan-name">免费体验</div>
+        <div class="plan-price">¥0<span>/月</span></div>
+        <div class="plan-desc">每日赠送，了解 AI 短剧</div>
+        <ul class="plan-features">
+          <li>每日 ≈60 积分（当日有效）</li>
+          <li>720P · 带水印</li>
+          <li>社区支持 · 个人非商用</li>
+        </ul>
+        <a href="#contact" class="plan-btn">免费开始</a>
+      </div>
+      <div class="pricing-card featured reveal">
+        <div class="plan-name">创作者</div>
+        <div class="plan-price">¥99<span>/月</span></div>
+        <div class="plan-desc">个人创作者 · 高级功能全解锁</div>
+        <ul class="plan-features">
+          <li>智能剪辑 + 质量审核</li>
+          <li>1080P · 去水印 · 商用授权</li>
+          <li>月赠 600 积分（1个月有效）</li>
+          <li>充值积分 24 个月有效</li>
+          <li>邮件支持</li>
+        </ul>
+        <a href="#contact" class="plan-btn">立即订阅</a>
+      </div>
+      <div class="pricing-card reveal">
+        <div class="plan-name">专业工作室</div>
+        <div class="plan-price">¥299<span>/月</span></div>
+        <div class="plan-desc">高频创作者 · 全套能力</div>
+        <ul class="plan-features">
+          <li>角色一致性 · 批量调度</li>
+          <li>4K 输出 · 优先队列</li>
+          <li>月赠 2000 积分（1个月有效）</li>
+          <li>API 接入 · 优先支持</li>
+        </ul>
+        <a href="#contact" class="plan-btn">立即订阅</a>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:28px;color:var(--foreground-muted);font-size:.8rem">
+      生成失败自动退还 · 免费积分当日有效 · 月赠积分 1 个月有效 · 充值积分 24 个月有效
+    </p>
+    <div class="price-table-wrap">
+    <table class="price-table">
+      <thead><tr><th>积分包</th><th>单价</th><th>价格</th></tr></thead>
+      <tbody>
+        <tr><td>入门包</td><td>¥0.25/积分</td><td style="font-weight:600">¥299</td></tr>
+        <tr><td>基础包</td><td>¥0.22/积分</td><td style="font-weight:600">¥1,299</td></tr>
+        <tr class="highlight"><td>⭐ 进阶包 <span class="tag">推荐</span></td><td>¥0.20/积分</td><td style="font-weight:600">¥5,999</td></tr>
+        <tr><td>专业包</td><td>¥0.17/积分</td><td style="font-weight:600">¥25,999</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label reveal">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      联系我们
+    </div>
+    <h2 class="reveal">准备好创作你的第一部 AI 短剧了吗？</h2>
+    <p class="section-desc reveal" style="max-width:600px">内测期间限时免费体验全功能。通过以下方式联系我们，我们将在 24 小时内为你开通账号。</p>
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div class="contact-label">邮箱联系</div>
+        <div class="contact-value"><a href="mailto:esadmin@126.com">esadmin@126.com</a></div>
+      </div>
+      <div class="contact-card reveal wechat-card">
+        <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <div class="contact-label">微信咨询</div>
+        <div class="contact-value">esadmin</div>
+        <div class="qr-inline">
+          <img src="wechat-qr.png" alt="微信二维码 · esadmin" class="qr-img">
+          <div class="qr-tip">扫码添加微信</div>
+        </div>
+      </div>
+      <div class="contact-card reveal">
+        <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <div class="contact-label">QQ 交流群</div>
+        <div class="contact-value">80625640</div>
+        <div class="qr-inline">
+          <img src="qq-qr.png" alt="QQ 二维码 · 80625640" class="qr-img">
+          <div class="qr-tip">扫码添加 QQ</div>
+        </div>
+      </div>
+      <div class="contact-card reveal">
+        <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+        <div class="contact-label">Telegram</div>
+        <div class="contact-value"><a href="https://t.me/ArlonQ" target="_blank" rel="noopener">@ArlonQ</a></div>
+        <div class="qr-inline">
+          <img src="tg-qr.png" alt="Telegram 二维码 · @ArlonQ" class="qr-img">
+          <div class="qr-tip">扫码添加 Telegram</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container reveal">
+    <h2>开始你的 AI 短剧之旅</h2>
+    <p>内测期间限时免费体验全功能。一键发送邮件，我们将在 24 小时内为你开通账号。</p>
+    <a href="mailto:esadmin@126.com" class="btn-primary" style="font-size:1.1rem;padding:16px 48px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:8px;margin-top:-2px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      立即申请内测
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 AI Drama Forge. 全链路 AI 短剧智能工厂。</p>
+  </div>
+</footer>
+
+<script>
+// Navbar scroll
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(link.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+
+</script>
+</body>
+</html>
