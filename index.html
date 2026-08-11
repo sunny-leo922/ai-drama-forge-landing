@@ -50,6 +50,12 @@ nav .nav-links a.external{background:rgba(255,255,255,.04);border:1px solid rgba
 nav .nav-links a.external:hover{color:#fff;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);transform:translateY(-1px)}
 nav .nav-links a.external::after{content:'';width:9px;height:9px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A8F98' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/><polyline points='15 3 21 3 21 9'/><line x1='10' y1='14' x2='21' y2='3'/></svg>");background-repeat:no-repeat;background-position:center;opacity:.7;transition:opacity .2s,transform .2s,filter .2s;filter:grayscale(1)}
 nav .nav-links a.external:hover::after{opacity:1;transform:translate(1px,-1px);filter:grayscale(1) brightness(1.5)}
+nav .nav-links a.external.quant::before{content:'';width:6px;height:6px;border-radius:50%;background:#ff4757;box-shadow:0 0 6px #ff4757;animation:quant-pulse 1.2s ease-in-out infinite alternate;flex-shrink:0}
+.quant:hover::before{animation:none;box-shadow:0 0 3px #ff4757}
+@keyframes quant-pulse{0%{background:#ff4757;box-shadow:0 0 6px #ff4757;transform:scale(.85)}100%{background:#2ed573;box-shadow:0 0 8px #2ed573;transform:scale(1.15)}}
+nav .nav-links a.external.tool::before{content:'⚙';font-size:.82rem;line-height:1;flex-shrink:0;animation:tool-spin 4s linear infinite}
+.tool:hover::before{animation-duration:1s}
+@keyframes tool-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 nav .nav-links .divider{width:1px;height:14px;background:rgba(255,255,255,0.12);margin:0 4px;align-self:center}
 nav .nav-links .nav-group-label{font-size:.75rem;color:var(--foreground-muted);opacity:.5;cursor:default}
 nav .cta-btn{padding:10px 24px;background:linear-gradient(135deg,var(--accent),var(--cta));color:#fff;border:none;border-radius:999px;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;transition:transform .2s var(--easing),box-shadow .2s var(--easing);text-decoration:none;display:inline-block}
@@ -235,8 +241,8 @@ footer p{color:var(--foreground-muted);font-size:.85rem}
       <li><a href="#download">下载</a></li>
       <li><a href="#contact">联系</a></li>
       <li><span class="divider" aria-hidden="true"></span></li>
-      <li><a href="https://sunny-leo922.github.io/xiaogang-quant/" target="_blank" rel="noopener" class="external" title="EA量化交易 - 浏览器打开">EA量化交易</a></li>
-      <li><a href="https://sunny-leo922.github.io/watermark-tool/" target="_blank" rel="noopener" class="external" title="自研实用小工具 - 浏览器打开">自研小工具</a></li>
+      <li><a href="https://sunny-leo922.github.io/xiaogang-quant/" target="_blank" rel="noopener" class="external quant" title="EA量化交易 - 浏览器打开">EA量化交易</a></li>
+      <li><a href="https://sunny-leo922.github.io/watermark-tool/" target="_blank" rel="noopener" class="external tool" title="自研实用小工具 - 浏览器打开">自研小工具</a></li>
     </ul>
     <a href="#contact" class="cta-btn">加入内测</a>
   </div>
