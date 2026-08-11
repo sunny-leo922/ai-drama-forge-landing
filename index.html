@@ -44,8 +44,12 @@ nav .logo{font-family:'Space Grotesk',system-ui,sans-serif;font-weight:700;font-
 nav .logo span{background:linear-gradient(135deg,var(--accent),var(--cta));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 nav .logo svg{width:24px;height:24px}
 nav .nav-links{display:flex;gap:32px;list-style:none}
-nav .nav-links a{color:var(--foreground-muted);text-decoration:none;font-size:.9rem;transition:color .2s}
+nav .nav-links a{color:var(--foreground-muted);text-decoration:none;font-size:.9rem;transition:color .2s;display:inline-flex;align-items:center;gap:4px}
 nav .nav-links a:hover{color:var(--foreground)}
+nav .nav-links a.external::after{content:'';width:10px;height:10px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/><polyline points='15 3 21 3 21 9'/><line x1='10' y1='14' x2='21' y2='3'/></svg>");background-repeat:no-repeat;background-position:center;opacity:.55;transition:opacity .2s,transform .2s}
+nav .nav-links a.external:hover::after{opacity:1;transform:translate(1px,-1px)}
+nav .nav-links .divider{width:1px;height:14px;background:rgba(255,255,255,0.12);margin:0 4px;align-self:center}
+nav .nav-links .nav-group-label{font-size:.75rem;color:var(--foreground-muted);opacity:.5;cursor:default}
 nav .cta-btn{padding:10px 24px;background:linear-gradient(135deg,var(--accent),var(--cta));color:#fff;border:none;border-radius:999px;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;transition:transform .2s var(--easing),box-shadow .2s var(--easing);text-decoration:none;display:inline-block}
 nav .cta-btn:hover{transform:scale(1.05);box-shadow:0 0 30px var(--cta-glow)}
 @media(max-width:768px){nav .nav-links{display:none}}
@@ -228,6 +232,9 @@ footer p{color:var(--foreground-muted);font-size:.85rem}
       <li><a href="#features">功能</a></li>
       <li><a href="#download">下载</a></li>
       <li><a href="#contact">联系</a></li>
+      <li><span class="divider" aria-hidden="true"></span></li>
+      <li><a href="https://sunny-leo922.github.io/xiaogang-quant/" target="_blank" rel="noopener" class="external" title="小刚量化 - 浏览器打开">小刚量化</a></li>
+      <li><a href="https://sunny-leo922.github.io/watermark-tool/" target="_blank" rel="noopener" class="external" title="水印工具 - 浏览器打开">水印工具</a></li>
     </ul>
     <a href="#contact" class="cta-btn">加入内测</a>
   </div>
