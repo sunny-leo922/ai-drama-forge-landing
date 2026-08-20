@@ -60,7 +60,12 @@ nav .nav-links .divider{width:1px;height:14px;background:rgba(255,255,255,0.12);
 nav .nav-links .nav-group-label{font-size:.75rem;color:var(--foreground-muted);opacity:.5;cursor:default}
 nav .cta-btn{padding:10px 24px;background:linear-gradient(135deg,var(--accent),var(--cta));color:#fff;border:none;border-radius:999px;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;transition:transform .2s var(--easing),box-shadow .2s var(--easing);text-decoration:none;display:inline-block}
 nav .cta-btn:hover{transform:scale(1.05);box-shadow:0 0 30px var(--cta-glow)}
+/* Language switch */
+nav .lang-switch{margin-right:8px}
+nav .lang-btn{padding:8px 16px;background:rgba(255,255,255,0.05);color:var(--foreground-muted);border:1px solid var(--border);border-radius:999px;font-family:'Space Grotesk',system-ui,sans-serif;font-weight:600;font-size:.82rem;cursor:pointer;transition:all .2s var(--easing);min-width:56px}
+nav .lang-btn:hover{color:var(--foreground);border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.1)}
 @media(max-width:768px){nav .nav-links{display:none}}
+@media(max-width:480px){nav .lang-btn{min-width:44px;padding:6px 10px;font-size:.72rem}}
 
 /* Hero */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:80px}
@@ -170,6 +175,11 @@ footer{padding:40px 0;border-top:1px solid var(--border);text-align:center}
 footer p{color:var(--foreground-muted);font-size:.85rem}
 .footer-disclaimer{margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
 .footer-disclaimer p{font-size:.72rem;color:#5A5F68;line-height:1.8;max-width:800px;margin:0 auto}
+.footer-links{margin-top:18px;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.footer-links span{font-size:.76rem;color:var(--foreground-muted)}
+.footer-links a{font-size:.76rem;color:var(--accent);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--cta)}
+.footer-links .sep{color:rgba(255,255,255,0.12);font-size:.7rem}
 /* Download */
 .download-section{padding:80px 0}
 .download-panel{max-width:760px;margin:0 auto;background:var(--bg-elevated);border:1px solid var(--border);border-radius:24px;padding:48px 56px;text-align:center;transition:border-color .3s var(--easing)}
@@ -236,33 +246,36 @@ footer p{color:var(--foreground-muted);font-size:.85rem}
       <span>Drama Forge</span>
     </a>
     <ul class="nav-links">
-      <li><a href="#pipeline">工作流</a></li>
-      <li><a href="#features">功能</a></li>
-      <li><a href="#download">下载</a></li>
-      <li><a href="#contact">联系</a></li>
+      <li><a href="#pipeline" data-i18n="nav_pipeline">工作流</a></li>
+      <li><a href="#features" data-i18n="nav_features">功能</a></li>
+      <li><a href="#download" data-i18n="nav_download">下载</a></li>
+      <li><a href="#contact" data-i18n="nav_contact">联系</a></li>
       <li><span class="divider" aria-hidden="true"></span></li>
-      <li><a href="https://sunny-leo922.github.io/xiaogang-quant/" target="_blank" rel="noopener" class="external quant" title="EA量化交易 - 浏览器打开">EA&amp;量化交易</a></li>
-      <li><a href="https://sunny-leo922.github.io/watermark-tool/" target="_blank" rel="noopener" class="external tool" title="自研实用小工具 - 浏览器打开">自研小工具</a></li>
+      <li><a href="https://sunny-leo922.github.io/xiaogang-quant/" target="_blank" rel="noopener" class="external quant" title="EA量化交易 - 浏览器打开" data-i18n="nav_quant">EA&amp;量化交易</a></li>
+      <li><a href="https://sunny-leo922.github.io/watermark-tool/" target="_blank" rel="noopener" class="external tool" title="自研实用小工具 - 浏览器打开" data-i18n="nav_tools">自研小工具</a></li>
     </ul>
-    <a href="#contact" class="cta-btn">加入内测</a>
+    <div class="lang-switch">
+      <button id="langToggle" class="lang-btn" type="button" data-i18n="lang_toggle">EN</button>
+    </div>
+    <a href="#contact" class="cta-btn" data-i18n="nav_cta">加入内测</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="container reveal">
-    <div class="badge"><span class="dot"></span> 限时内测招募中 · 核心功能免费体验</div>
-    <h1>从剧本到成片<br><span class="gradient">全链路 AI 自动化</span></h1>
-    <p>不需要拍摄团队，不需要剪辑软件。输入想法，得到成片。</p>
+    <div class="badge"><span class="dot"></span><span data-i18n="hero_badge">限时内测招募中 · 核心功能免费体验</span></div>
+    <h1 data-i18n-html="hero_h1">从剧本到成片<br><span class="gradient">全链路 AI 自动化</span></h1>
+    <p data-i18n="hero_sub">不需要拍摄团队，不需要剪辑软件。输入想法，得到成片。</p>
     <div class="hero-cta-group">
-      <a href="#contact" class="btn-primary">立即申请内测 · 限时免费</a>
-      <a href="#pipeline" class="btn-secondary">查看工作流 →</a>
+      <a href="#contact" class="btn-primary" data-i18n="hero_cta1">立即申请内测 · 限时免费</a>
+      <a href="#pipeline" class="btn-secondary" data-i18n="hero_cta2">查看工作流 →</a>
     </div>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-value">7 步</div><div class="stat-label">全自动流水线</div></div>
-      <div class="stat"><div class="stat-value">60 集</div><div class="stat-label">单次批量产出</div></div>
-      <div class="stat"><div class="stat-value">9:16</div><div class="stat-label">原生竖屏比例</div></div>
-      <div class="stat"><div class="stat-value">1080P</div><div class="stat-label">竖屏直出</div></div>
+      <div class="stat"><div class="stat-value">7 步</div><div class="stat-label" data-i18n="stat1">全自动流水线</div></div>
+      <div class="stat"><div class="stat-value">60 集</div><div class="stat-label" data-i18n="stat2">单次批量产出</div></div>
+      <div class="stat"><div class="stat-value">9:16</div><div class="stat-label" data-i18n="stat3">原生竖屏比例</div></div>
+      <div class="stat"><div class="stat-value">1080P</div><div class="stat-label" data-i18n="stat4">竖屏直出</div></div>
     </div>
   </div>
 </section>
@@ -272,18 +285,18 @@ footer p{color:var(--foreground-muted);font-size:.85rem}
   <div class="container">
     <div class="section-label reveal">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-      制作流程
+      <span data-i18n="pipeline_label">制作流程</span>
     </div>
-    <h2 class="reveal">7 步智能流水线</h2>
-    <p class="section-desc reveal">不需要拍摄团队，不需要剪辑软件。输入想法，得到成片。</p>
+    <h2 class="reveal" data-i18n="pipeline_title">7 步智能流水线</h2>
+    <p class="section-desc reveal" data-i18n="pipeline_desc">不需要拍摄团队，不需要剪辑软件。输入想法，得到成片。</p>
     <div class="pipeline-grid">
-      <div class="pipeline-card reveal"><div class="step-num">STEP 01</div><h3>剧本生成</h3><p>输入故事梗概，AI 自动扩写为完整的分集剧本，含人物对白与场景描述</p></div>
-      <div class="pipeline-card reveal"><div class="step-num">STEP 02</div><h3>角色设计</h3><p>AI 根据剧本自动设计角色形象，锁定外貌特征，全剧保持统一</p></div>
-      <div class="pipeline-card reveal"><div class="step-num">STEP 03</div><h3>场景构图</h3><p>AI 为每集剧情自动生成场景画面，适配现代、古装、奇幻等任意风格</p></div>
-      <div class="pipeline-card reveal"><div class="step-num">STEP 04</div><h3>分镜绘制</h3><p>AI 智能拆解每集为 10-15 个镜头，确定画面构图与运镜方式</p></div>
-      <div class="pipeline-card reveal"><div class="step-num">STEP 05</div><h3>视频生成</h3><p>每个镜头生成 1080×1920 竖屏视频片段，画面流畅自然</p></div>
-      <div class="pipeline-card reveal"><div class="step-num">STEP 06</div><h3>配音合成</h3><p>AI 为每个角色匹配专属声音，自动加入背景音乐与环境音效</p></div>
-      <div class="pipeline-card reveal"><div class="step-num">STEP 07</div><h3>剪辑合片</h3><p>自动拼接所有镜头，添加转场特效、字幕与电影级调色，输出完整 MP4</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 01</div><h3 data-i18n="pl1_t">剧本生成</h3><p data-i18n="pl1_d">输入故事梗概，AI 自动扩写为完整的分集剧本，含人物对白与场景描述</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 02</div><h3 data-i18n="pl2_t">角色设计</h3><p data-i18n="pl2_d">AI 根据剧本自动设计角色形象，锁定外貌特征，全剧保持统一</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 03</div><h3 data-i18n="pl3_t">场景构图</h3><p data-i18n="pl3_d">AI 为每集剧情自动生成场景画面，适配现代、古装、奇幻等任意风格</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 04</div><h3 data-i18n="pl4_t">分镜绘制</h3><p data-i18n="pl4_d">AI 智能拆解每集为 10-15 个镜头，确定画面构图与运镜方式</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 05</div><h3 data-i18n="pl5_t">视频生成</h3><p data-i18n="pl5_d">每个镜头生成 1080×1920 竖屏视频片段，画面流畅自然</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 06</div><h3 data-i18n="pl6_t">配音合成</h3><p data-i18n="pl6_d">AI 为每个角色匹配专属声音，自动加入背景音乐与环境音效</p></div>
+      <div class="pipeline-card reveal"><div class="step-num">STEP 07</div><h3 data-i18n="pl7_t">剪辑合片</h3><p data-i18n="pl7_d">自动拼接所有镜头，添加转场特效、字幕与电影级调色，输出完整 MP4</p></div>
     </div>
   </div>
 </section>
@@ -293,40 +306,40 @@ footer p{color:var(--foreground-muted);font-size:.85rem}
   <div class="container">
     <div class="section-label reveal">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      核心优势
+      <span data-i18n="features_label">核心优势</span>
     </div>
-    <h2 class="reveal">为什么创作者选择我们</h2>
-    <p class="section-desc reveal">不用学任何新技术，像发朋友圈一样简单。</p>
+    <h2 class="reveal" data-i18n="features_title">为什么创作者选择我们</h2>
+    <p class="section-desc reveal" data-i18n="features_desc">不用学任何新技术，像发朋友圈一样简单。</p>
     <div class="features-grid">
       <div class="feature-card reveal">
         <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-        <h3>零门槛上手</h3>
-        <p>不需要拍摄设备、演员、剪辑软件。写好故事梗概，AI 自动完成从剧本到成片的全过程。</p>
+        <h3 data-i18n="f1_t">零门槛上手</h3>
+        <p data-i18n="f1_d">不需要拍摄设备、演员、剪辑软件。写好故事梗概，AI 自动完成从剧本到成片的全过程。</p>
       </div>
       <div class="feature-card reveal">
         <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg></div>
-        <h3>竖屏直出，发即用</h3>
-        <p>1080×1920 原生竖屏 MP4，专为抖音、快手、TikTok 优化，下载即可发布，无需任何后期。</p>
+        <h3 data-i18n="f2_t">竖屏直出，发即用</h3>
+        <p data-i18n="f2_d">1080×1920 原生竖屏 MP4，专为抖音、快手、TikTok 优化，下载即可发布，无需任何后期。</p>
       </div>
       <div class="feature-card reveal">
         <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <h3>角色一致性</h3>
-        <p>我们正在攻克 AI 短剧最大的痛点——角色崩脸。通过 DNA 硬锁定与多轮比对，致力于让全剧角色形象保持统一。</p>
+        <h3 data-i18n="f3_t">角色一致性</h3>
+        <p data-i18n="f3_d">我们正在攻克 AI 短剧最大的痛点——角色崩脸。通过 DNA 硬锁定与多轮比对，致力于让全剧角色形象保持统一。</p>
       </div>
       <div class="feature-card reveal">
         <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <h3>批量出片，高效产出</h3>
-        <p>一次提交，后台自动渲染 60 集。完成后通知你下载，你只需专注创作好故事。</p>
+        <h3 data-i18n="f4_t">批量出片，高效产出</h3>
+        <p data-i18n="f4_d">一次提交，后台自动渲染 60 集。完成后通知你下载，你只需专注创作好故事。</p>
       </div>
       <div class="feature-card reveal">
         <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10M12 2a15.3 15.3 0 0 0-4 10 15.3 15.3 0 0 0 4 10"/></svg></div>
-        <h3>中文 + 英语双市场</h3>
-        <p>同一套流程，同时产出国内版和海外版。覆盖抖音 6 亿用户 + TikTok 15 亿用户。</p>
+        <h3 data-i18n="f5_t">中文 + 英语双市场</h3>
+        <p data-i18n="f5_d">同一套流程，同时产出国内版和海外版。覆盖抖音 6 亿用户 + TikTok 15 亿用户。</p>
       </div>
       <div class="feature-card reveal">
         <div class="icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <h3>失败不扣分</h3>
-        <p>AI 生成失败？积分自动退还。按实际产出计费，不玩套路。</p>
+        <h3 data-i18n="f6_t">失败不扣分</h3>
+        <p data-i18n="f6_d">AI 生成失败？积分自动退还。按实际产出计费，不玩套路。</p>
       </div>
     </div>
   </div>
@@ -337,16 +350,16 @@ footer p{color:var(--foreground-muted);font-size:.85rem}
   <div class="container">
     <div class="beta-cta-banner reveal">
       <div class="banner-content">
-        <div class="banner-badge"><span class="dot"></span> 首批内测用户招募中</div>
-        <h3>你不需要懂技术，<br>只需要一个<span class="gradient">好故事</span></h3>
-        <p>AI Drama Forge 正在寻找第一批内测创作者。如果你是短剧编剧、自媒体达人、或者只是有好故事想说的人——我们帮你把文字变成视频，从剧本到成片，全自动。内测期间，剧本生成、角色设计、分镜绘制、视频生成等核心创作功能全部免费开放。</p>
+        <div class="banner-badge"><span class="dot"></span><span data-i18n="beta_badge">首批内测用户招募中</span></div>
+        <h3 data-i18n-html="beta_h3">你不需要懂技术，<br>只需要一个<span class="gradient">好故事</span></h3>
+        <p data-i18n="beta_desc">AI Drama Forge 正在寻找第一批内测创作者。如果你是短剧编剧、自媒体达人、或者只是有好故事想说的人——我们帮你把文字变成视频，从剧本到成片，全自动。内测期间，剧本生成、角色设计、分镜绘制、视频生成等核心创作功能全部免费开放。</p>
         <div class="banner-highlights">
-          <div class="hl"><div class="hl-icon">核心免费</div><div class="hl-label">基础功能零费用</div></div>
-          <div class="hl"><div class="hl-icon">7×24h</div><div class="hl-label">优先技术支持</div></div>
-          <div class="hl"><div class="hl-icon">限名额</div><div class="hl-label">首批仅开放 50 人</div></div>
-          <div class="hl"><div class="hl-icon">零门槛</div><div class="hl-label">有故事就能创作</div></div>
+          <div class="hl"><div class="hl-icon">核心免费</div><div class="hl-label" data-i18n="hl1">基础功能零费用</div></div>
+          <div class="hl"><div class="hl-icon">7×24h</div><div class="hl-label" data-i18n="hl2">优先技术支持</div></div>
+          <div class="hl"><div class="hl-icon">限名额</div><div class="hl-label" data-i18n="hl3">首批仅开放 50 人</div></div>
+          <div class="hl"><div class="hl-icon">零门槛</div><div class="hl-label" data-i18n="hl4">有故事就能创作</div></div>
         </div>
-        <a href="#contact" class="btn-primary" style="font-size:1rem;padding:14px 40px">加入内测 · 限时免费</a>
+        <a href="#contact" class="btn-primary" style="font-size:1rem;padding:14px 40px" data-i18n="beta_cta">加入内测 · 限时免费</a>
       </div>
     </div>
   </div>
@@ -360,36 +373,36 @@ footer p{color:var(--foreground-muted);font-size:.85rem}
     <div class="download-panel reveal">
       <div class="section-label">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        下载客户端
+        <span data-i18n="dl_label">下载客户端</span>
       </div>
-      <h2>Windows 桌面客户端</h2>
-      <p class="download-tagline">下载安装即可使用，当前为内测版，仅限授权用户登录</p>
+      <h2 data-i18n="dl_title">Windows 桌面客户端</h2>
+      <p class="download-tagline" data-i18n="dl_tag">下载安装即可使用，当前为内测版，仅限授权用户登录</p>
       <ul class="download-features">
         <li>
           <span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span>
-          <span>安装即用 <strong>无需配置</strong></span>
+          <span data-i18n="dl_f1">安装即用 <strong>无需配置</strong></span>
         </li>
         <li>
           <span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><polyline points="21 3 21 8 16 8"/></svg></span>
-          <span>内置<strong>自动更新</strong>机制</span>
+          <span data-i18n="dl_f2">内置<strong>自动更新</strong>机制</span>
         </li>
         <li>
           <span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
-          <span>激活码<strong>授权登录</strong></span>
+          <span data-i18n="dl_f3">激活码<strong>授权登录</strong></span>
         </li>
         <li>
           <span class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
-          <span>支持 <strong>Windows 10/11</strong></span>
+          <span data-i18n="dl_f4">支持 <strong>Windows 10/11</strong></span>
         </li>
       </ul>
       <div class="download-divider"></div>
       <div class="download-action">
         <div class="dl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
         <div class="dl-info">
-          <div class="dl-title">爱剧创 Setup 0.1.12</div>
-          <div class="dl-meta">Windows · 约 111 MB · 内测版</div>
+          <div class="dl-title" data-i18n="dl_file">爱剧创 Setup 0.1.1</div>
+          <div class="dl-meta" data-i18n="dl_meta">Windows · 约 111 MB · 内测版</div>
         </div>
-        <a href="https://47.99.125.244/downloads/%E7%88%B1%E5%89%A7%E5%88%9B%20Setup%200.1.12.exe" class="dl-btn" download>
+        <a href="https://47.99.125.244/downloads/%E7%88%B1%E5%89%A7%E5%88%9B%20Setup%200.1.1.exe" class="dl-btn" download data-i18n="dl_btn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px;margin-top:-2px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           下载安装包
         </a>
@@ -403,41 +416,41 @@ footer p{color:var(--foreground-muted);font-size:.85rem}
   <div class="container">
     <div class="section-label reveal">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      联系我们
+      <span data-i18n="contact_label">联系我们</span>
     </div>
-    <h2 class="reveal">内测招募中，核心功能免费</h2>
-    <p class="section-desc reveal" style="max-width:600px">首批内测用户可免费体验剧本生成、角色设计、视频生成等核心功能。通过以下方式联系，24 小时内开通账号，先到先得。</p>
+    <h2 class="reveal" data-i18n="contact_title">内测招募中，核心功能免费</h2>
+    <p class="section-desc reveal" style="max-width:600px" data-i18n="contact_desc">首批内测用户可免费体验剧本生成、角色设计、视频生成等核心功能。通过以下方式联系，24 小时内开通账号，先到先得。</p>
     <div class="contact-grid">
       <div class="contact-card reveal">
         <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-        <div class="contact-label">邮箱联系</div>
+        <div class="contact-label" data-i18n="c_email">邮箱联系</div>
         <div class="contact-value"><a href="mailto:esadmin@126.com">esadmin@126.com</a></div>
       </div>
       <div class="contact-card reveal wechat-card">
         <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-        <div class="contact-label">微信咨询</div>
+        <div class="contact-label" data-i18n="c_wechat">微信咨询</div>
         <div class="contact-value">esadmin</div>
         <div class="qr-inline">
           <img src="wechat-qr.png" alt="微信二维码 · esadmin" class="qr-img">
-          <div class="qr-tip">扫码添加微信</div>
+          <div class="qr-tip" data-i18n="c_wechat_tip">扫码添加微信</div>
         </div>
       </div>
       <div class="contact-card reveal">
         <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <div class="contact-label">QQ 交流群</div>
+        <div class="contact-label" data-i18n="c_qq">QQ 交流群</div>
         <div class="contact-value">80625640</div>
         <div class="qr-inline">
           <img src="qq-qr.png" alt="QQ 二维码 · 80625640" class="qr-img">
-          <div class="qr-tip">扫码添加 QQ</div>
+          <div class="qr-tip" data-i18n="c_qq_tip">扫码添加 QQ</div>
         </div>
       </div>
       <div class="contact-card reveal">
         <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
-        <div class="contact-label">Telegram</div>
+        <div class="contact-label" data-i18n="c_tg">Telegram</div>
         <div class="contact-value"><a href="https://t.me/ArlonQ" target="_blank" rel="noopener">@ArlonQ</a></div>
         <div class="qr-inline">
           <img src="tg-qr.png" alt="Telegram 二维码 · @ArlonQ" class="qr-img">
-          <div class="qr-tip">扫码添加 Telegram</div>
+          <div class="qr-tip" data-i18n="c_tg_tip">扫码添加 Telegram</div>
         </div>
       </div>
     </div>
@@ -447,9 +460,9 @@ footer p{color:var(--foreground-muted);font-size:.85rem}
 <!-- CTA -->
 <section class="cta-section">
   <div class="container reveal">
-    <h2>限时内测，核心功能免费</h2>
-    <p>首批内测用户可免费体验核心创作功能。具体免费范围以内测协议为准。一键发送邮件，24 小时内为你开通账号。</p>
-    <a href="mailto:esadmin@126.com" class="btn-primary" style="font-size:1.1rem;padding:16px 48px">
+    <h2 data-i18n="cta_title">限时内测，核心功能免费</h2>
+    <p data-i18n="cta_desc">首批内测用户可免费体验核心创作功能。具体免费范围以内测协议为准。一键发送邮件，24 小时内为你开通账号。</p>
+    <a href="mailto:esadmin@126.com" class="btn-primary" style="font-size:1.1rem;padding:16px 48px" data-i18n="cta_btn">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:8px;margin-top:-2px"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
       立即申请内测
     </a>
@@ -458,9 +471,9 @@ footer p{color:var(--foreground-muted);font-size:.85rem}
 
 <footer>
   <div class="container">
-    <p>© 2026 AI Drama Forge. 全链路 AI 短剧智能工厂。</p>
+    <p data-i18n="footer_copy">© 2026 AI Drama Forge. 全链路 AI 短剧智能工厂。</p>
     <div class="footer-disclaimer">
-      <p>免责声明：AI Drama Forge 是 AI 辅助创作工具，生成内容由 AI 模型自动产出。用户对其使用本工具生成的内容负全部法律责任，包括但不限于版权合规、内容审核与发布授权。本工具不对生成内容的准确性、合法性、可用性或商业化适配性作任何明示或暗示的保证。内测期间的功能范围、免费政策及服务可用性可能随时调整，最终解释权归 AI Drama Forge 所有。使用本工具即表示您已阅读并同意上述条款。</p>
+      <p data-i18n="footer_disclaimer">免责声明：AI Drama Forge 是 AI 辅助创作工具，生成内容由 AI 模型自动产出。用户对其使用本工具生成的内容负全部法律责任，包括但不限于版权合规、内容审核与发布授权。本工具不对生成内容的准确性、合法性、可用性或商业化适配性作任何明示或暗示的保证。内测期间的功能范围、免费政策及服务可用性可能随时调整，最终解释权归 AI Drama Forge 所有。使用本工具即表示您已阅读并同意上述条款。</p>
     </div>
   </div>
 </footer>
@@ -485,6 +498,110 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   });
 });
 
+// ===== i18n (中文 / English) =====
+const I18N = {
+  zh: {
+    lang_toggle: 'EN',
+    nav_pipeline: '工作流', nav_features: '功能', nav_download: '下载', nav_contact: '联系',
+    nav_quant: 'EA&量化交易', nav_tools: '自研小工具', nav_cta: '加入内测',
+    hero_badge: '限时内测招募中 · 核心功能免费体验',
+    hero_h1: '从剧本到成片<br><span class="gradient">全链路 AI 自动化</span>',
+    hero_sub: '不需要拍摄团队，不需要剪辑软件。输入想法，得到成片。',
+    hero_cta1: '立即申请内测 · 限时免费', hero_cta2: '查看工作流 →',
+    stat1: '全自动流水线', stat2: '单次批量产出', stat3: '原生竖屏比例', stat4: '竖屏直出',
+    pipeline_label: '制作流程', pipeline_title: '7 步智能流水线', pipeline_desc: '不需要拍摄团队，不需要剪辑软件。输入想法，得到成片。',
+    pl1_t: '剧本生成', pl1_d: '输入故事梗概，AI 自动扩写为完整的分集剧本，含人物对白与场景描述',
+    pl2_t: '角色设计', pl2_d: 'AI 根据剧本自动设计角色形象，锁定外貌特征，全剧保持统一',
+    pl3_t: '场景构图', pl3_d: 'AI 为每集剧情自动生成场景画面，适配现代、古装、奇幻等任意风格',
+    pl4_t: '分镜绘制', pl4_d: 'AI 智能拆解每集为 10-15 个镜头，确定画面构图与运镜方式',
+    pl5_t: '视频生成', pl5_d: '每个镜头生成 1080×1920 竖屏视频片段，画面流畅自然',
+    pl6_t: '配音合成', pl6_d: 'AI 为每个角色匹配专属声音，自动加入背景音乐与环境音效',
+    pl7_t: '剪辑合片', pl7_d: '自动拼接所有镜头，添加转场特效、字幕与电影级调色，输出完整 MP4',
+    features_label: '核心优势', features_title: '为什么创作者选择我们', features_desc: '不用学任何新技术，像发朋友圈一样简单。',
+    f1_t: '零门槛上手', f1_d: '不需要拍摄设备、演员、剪辑软件。写好故事梗概，AI 自动完成从剧本到成片的全过程。',
+    f2_t: '竖屏直出，发即用', f2_d: '1080×1920 原生竖屏 MP4，专为抖音、快手、TikTok 优化，下载即可发布，无需任何后期。',
+    f3_t: '角色一致性', f3_d: '我们正在攻克 AI 短剧最大的痛点——角色崩脸。通过 DNA 硬锁定与多轮比对，致力于让全剧角色形象保持统一。',
+    f4_t: '批量出片，高效产出', f4_d: '一次提交，后台自动渲染 60 集。完成后通知你下载，你只需专注创作好故事。',
+    f5_t: '中文 + 英语双市场', f5_d: '同一套流程，同时产出国内版和海外版。覆盖抖音 6 亿用户 + TikTok 15 亿用户。',
+    f6_t: '失败不扣分', f6_d: 'AI 生成失败？积分自动退还。按实际产出计费，不玩套路。',
+    beta_badge: '首批内测用户招募中',
+    beta_h3: '你不需要懂技术，<br>只需要一个<span class="gradient">好故事</span>',
+    beta_desc: 'AI Drama Forge 正在寻找第一批内测创作者。如果你是短剧编剧、自媒体达人、或者只是有好故事想说的人——我们帮你把文字变成视频，从剧本到成片，全自动。内测期间，剧本生成、角色设计、分镜绘制、视频生成等核心创作功能全部免费开放。',
+    hl1: '基础功能零费用', hl2: '优先技术支持', hl3: '首批仅开放 50 人', hl4: '有故事就能创作',
+    beta_cta: '加入内测 · 限时免费',
+    dl_label: '下载客户端', dl_title: 'Windows 桌面客户端', dl_tag: '下载安装即可使用，当前为内测版，仅限授权用户登录',
+    dl_f1: '安装即用 <strong>无需配置</strong>', dl_f2: '内置<strong>自动更新</strong>机制', dl_f3: '激活码<strong>授权登录</strong>', dl_f4: '支持 <strong>Windows 10/11</strong>',
+    dl_file: '爱剧创 Setup 0.1.1', dl_meta: 'Windows · 约 111 MB · 内测版', dl_btn: '下载安装包',
+    contact_label: '联系我们', contact_title: '内测招募中，核心功能免费', contact_desc: '首批内测用户可免费体验剧本生成、角色设计、视频生成等核心功能。通过以下方式联系，24 小时内开通账号，先到先得。',
+    c_email: '邮箱联系', c_wechat: '微信咨询', c_wechat_tip: '扫码添加微信', c_qq: 'QQ 交流群', c_qq_tip: '扫码添加 QQ', c_tg: 'Telegram', c_tg_tip: '扫码添加 Telegram',
+    cta_title: '限时内测，核心功能免费', cta_desc: '首批内测用户可免费体验核心创作功能。具体免费范围以内测协议为准。一键发送邮件，24 小时内为你开通账号。', cta_btn: '立即申请内测',
+    footer_copy: '© 2026 AI Drama Forge. 全链路 AI 短剧智能工厂。',
+    footer_disclaimer: '免责声明：AI Drama Forge 是 AI 辅助创作工具，生成内容由 AI 模型自动产出。用户对其使用本工具生成的内容负全部法律责任，包括但不限于版权合规、内容审核与发布授权。本工具不对生成内容的准确性、合法性、可用性或商业化适配性作任何明示或暗示的保证。内测期间的功能范围、免费政策及服务可用性可能随时调整，最终解释权归 AI Drama Forge 所有。使用本工具即表示您已阅读并同意上述条款。'
+  },
+  en: {
+    lang_toggle: '中',
+    nav_pipeline: 'Workflow', nav_features: 'Features', nav_download: 'Download', nav_contact: 'Contact',
+    nav_quant: 'Quant Trading', nav_tools: 'Mini Tools', nav_cta: 'Join Beta',
+    hero_badge: 'Limited Beta Open · Core Features Free',
+    hero_h1: 'From script to finished film<br><span class="gradient">fully automated by AI</span>',
+    hero_sub: 'No crew, no editing software. Type an idea, get a finished video.',
+    hero_cta1: 'Apply Now · Free During Beta', hero_cta2: 'See the workflow →',
+    stat1: 'Full-auto pipeline', stat2: '60 eps per run', stat3: 'Native vertical ratio', stat4: 'Vertical 1080P',
+    pipeline_label: 'Pipeline', pipeline_title: '7-step AI pipeline', pipeline_desc: 'No crew, no editing software. Type an idea, get a finished video.',
+    pl1_t: 'Script Generation', pl1_d: 'Enter a logline; AI expands it into full episode scripts with dialogue and scene descriptions',
+    pl2_t: 'Character Design', pl2_d: 'AI designs each character and locks their look so it stays consistent across all episodes',
+    pl3_t: 'Scene Layout', pl3_d: 'AI generates scenes for every episode in modern, ancient, fantasy, or any style',
+    pl4_t: 'Storyboarding', pl4_d: 'AI breaks each episode into 10-15 shots with composition and camera movement',
+    pl5_t: 'Video Generation', pl5_d: 'Each shot renders as a smooth 1080×1920 vertical video clip',
+    pl6_t: 'Voice & Sound', pl6_d: 'AI voices each character and adds background music and ambient sound',
+    pl7_t: 'Edit & Export', pl7_d: 'All shots auto-assembled with transitions, subtitles and cinematic color grade, exported as MP4',
+    features_label: 'Features', features_title: 'Why creators choose us', features_desc: 'No new skills needed — as simple as posting a status update.',
+    f1_t: 'Zero learning curve', f1_d: 'No cameras, actors or editing software. Write a logline; AI does everything from script to film.',
+    f2_t: 'Vertical ready-to-post', f2_d: 'Native 1080×1920 vertical MP4 optimized for Douyin, Kuaishou and TikTok — download and publish.',
+    f3_t: 'Character consistency', f3_d: 'We tackle the #1 pain point of AI dramas — face drift. DNA locking and multi-round checks keep every character identical on screen.',
+    f4_t: 'Batch output', f4_d: 'One submit, 60 episodes render in the background. You just focus on the story.',
+    f5_t: 'Dual market', f5_d: 'One pipeline produces both China and global versions, covering 600M Douyin + 1.5B TikTok users.',
+    f6_t: 'Fair credits', f6_d: 'AI generation failed? Credits auto-refunded. Pay only for what is actually produced.',
+    beta_badge: 'First batch of beta users recruiting',
+    beta_h3: 'You don\'t need tech skills,<br>you only need a <span class="gradient">great story</span>',
+    beta_desc: 'AI Drama Forge is looking for its first beta creators. Whether you are a short-drama writer, a content creator, or just someone with a story to tell — we turn your words into video, from script to finished film, fully automated. During the beta, core creation features like script generation, character design, storyboarding and video generation are completely free.',
+    hl1: 'Core features free', hl2: 'Priority support', hl3: 'Only 50 slots', hl4: 'A story is enough',
+    beta_cta: 'Join the Beta · Free',
+    dl_label: 'Download', dl_title: 'Windows Desktop Client', dl_tag: 'Download and install to use — currently a beta build for authorized users only',
+    dl_f1: 'Install & go, <strong>zero setup</strong>', dl_f2: 'Built-in <strong>auto-update</strong>', dl_f3: 'Activation code <strong>login</strong>', dl_f4: 'Supports <strong>Windows 10/11</strong>',
+    dl_file: 'AI Drama Forge Setup 0.1.1', dl_meta: 'Windows · ~111 MB · Beta', dl_btn: 'Download Installer',
+    contact_label: 'Contact', contact_title: 'Beta open · core features free', contact_desc: 'First-batch beta users get free access to script generation, character design and video generation. Reach us below and we\'ll open your account within 24 hours — first come, first served.',
+    c_email: 'Email', c_wechat: 'WeChat', c_wechat_tip: 'Scan to add', c_qq: 'QQ Group', c_qq_tip: 'Scan to add', c_tg: 'Telegram', c_tg_tip: 'Scan to add',
+    cta_title: 'Limited-time beta · core features free', cta_desc: 'First-batch users try core creation features free. Exact scope follows the beta agreement. One-click email, account opened within 24 hours.', cta_btn: 'Apply Now',
+    footer_copy: '© 2026 AI Drama Forge. AI-powered short-drama factory.',
+    footer_disclaimer: 'Disclaimer: AI Drama Forge is an AI-assisted creation tool; all content is produced automatically by AI models. Users bear full legal responsibility for the content they create, including but not limited to copyright compliance, content moderation and publishing authorization. This tool makes no express or implied warranty about the accuracy, legality, usability or commercial fitness of generated content. Feature scope, free policy and service availability during beta may change at any time; final interpretation belongs to AI Drama Forge. By using this tool you agree to these terms.'
+  }
+};
+
+const applyLang = () => {
+  const lang = localStorage.getItem('lang') === 'en' ? 'en' : 'zh';
+  const dict = I18N[lang];
+  document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] != null) el.innerHTML = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (dict[key] != null) el.innerHTML = dict[key];
+  });
+  const toggle = document.getElementById('langToggle');
+  if (toggle) toggle.textContent = dict.lang_toggle;
+};
+
+const toggleLang = () => {
+  localStorage.setItem('lang', (localStorage.getItem('lang') === 'en') ? 'zh' : 'en');
+  applyLang();
+};
+
+const toggleBtn = document.getElementById('langToggle');
+if (toggleBtn) toggleBtn.addEventListener('click', toggleLang);
+applyLang();
 
 </script>
 </body>
